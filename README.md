@@ -1,0 +1,2 @@
+# SalesSmartphones
+Spring boot project
