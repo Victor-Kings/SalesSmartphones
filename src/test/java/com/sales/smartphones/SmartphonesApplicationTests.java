@@ -1,4 +1,4 @@
-package com.ProjSales.smartphones;
+package com.sales.smartphones;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
