@@ -18,25 +18,41 @@ public class ProductServices {
     public List<Product> listAll() {
         return productRepository.findAll();
     }
-    public Optional<Product> read(Long id) {
-        return productRepository.findById(id);
+
+    public ResponseEntity<Product> read(Long id) {
+        Optional<Product> product = productRepository.findById(id);
+        if (product.isPresent()) {
+            return new ResponseEntity<>(product.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    public Product create(Product product){
-        return productRepository.save(product);
+    public ResponseEntity<Product> create(Product product) {
+        if (product.getMark() == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
     }
 
-    public void delete(Long id){
-        productRepository.deleteById(id);
-    }
-    public ResponseEntity<Product> update(Long id, Product newProduct){
-        Optional <Product> productData = productRepository.findById(id);
-        if(productData.isPresent()){
-            Product product = productData.get();
-            product.setMark(newProduct.getMark());
-            return new ResponseEntity<>( productRepository.save(product), HttpStatus.OK);
-        }else{
+    public ResponseEntity<HttpStatus> delete(Long id) {
+        try {
+            productRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    public ResponseEntity<Product> update(Long id, Product newProduct) {
+        if (newProduct.getMark() == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        Optional<Product> productData = productRepository.findById(id);
+        if (productData.isPresent()) {
+            Product product = productData.get();
+            product.setMark(newProduct.getMark());
+            return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
