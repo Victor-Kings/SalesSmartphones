@@ -14,4 +14,8 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String mark;
+    private int amount;
+    private String model;
+    private String color;
+    private Float price;
 }

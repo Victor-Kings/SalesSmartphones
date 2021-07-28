@@ -51,6 +51,10 @@ public class ProductServices {
         if (productData.isPresent()) {
             Product product = productData.get();
             product.setMark(newProduct.getMark());
+            product.setAmount(newProduct.getAmount());
+            product.setModel(newProduct.getModel());
+            product.setColor(newProduct.getColor());
+            product.setPrice(newProduct.getPrice());
             return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
