@@ -17,13 +17,16 @@ CREATE TABLE customer(
  PRIMARY KEY (id)
 );
 
+CREATE TYPE statusType as ENUM('AGUARDANDO_PAGAMENTO','PAGAMENTO_RECEBIDO','SAINDO_PARA_ENTREGA','CONCLUIDO','CANCELADA');
+
 CREATE TABLE sales(
  id serial NOT NULL,
  id_customer serial NOT NULL,
  id_product serial NOT NULL,
  buy_date timestamp NOT NULL,
  delivery_date timestamp NOT NULL,
+ status statusType,
  PRIMARY KEY (id),
  FOREIGN KEY (id_customer) REFERENCES customer (id),
- FOREIGN KEY (id_product) REFERENCES products (id)
+ FOREIGN KEY (id_product) REFERENCES product (id)
 );
