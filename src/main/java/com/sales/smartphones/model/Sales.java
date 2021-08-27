@@ -1,10 +1,10 @@
 package com.sales.smartphones.model;
 
-import com.sales.smartphones.model.enums.Status;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity(name="sales")
@@ -15,14 +15,15 @@ public class Sales {
     private Date buyDate;
     private Date deliveryDate;
 
-    @Enumerated(EnumType.ORDINAL)
-    private Status status;
+  //  @Enumerated(EnumType.STRING)
+    @Column(name = "status_sales")
+    private String status;
 
     @OneToOne
     @JoinColumn(name ="id_customer")
-    private Customer idCustomer;
+    private Customer customer;
 
-    @OneToOne
+    @OneToMany
     @JoinColumn(name ="id_product")
-    private Product idProduct;
+    private List<Product> products;
 }

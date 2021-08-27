@@ -1,6 +1,6 @@
 package com.sales.smartphones.service;
 
-import com.sales.smartphones.exception.AmountNotValideException;
+import com.sales.smartphones.exception.AmountNotValidException;
 import com.sales.smartphones.exception.MarkNotInformedException;
 import com.sales.smartphones.exception.ProductNotFoundException;
 import com.sales.smartphones.model.Product;
@@ -48,7 +48,7 @@ public class ProductServiceImpl implements ProductService{
             throw new MarkNotInformedException("Marca não inserida");
         }
         if(newProduct.getAmount()<0){
-            throw new AmountNotValideException("Campo amount negativo");
+            throw new AmountNotValidException("Campo amount negativo");
         }
         Optional<Product> productData = productRepository.findById(id);
         if (productData.isPresent()) {

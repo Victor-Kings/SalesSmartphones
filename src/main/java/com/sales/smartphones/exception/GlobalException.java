@@ -8,18 +8,24 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class GlobalException extends ResponseEntityExceptionHandler{
-    @ExceptionHandler
-    public ResponseEntity<ApiError> handleProductNotFoundException(ProductNotFoundException e, WebRequest request){
+//    @ExceptionHandler
+//    public ResponseEntity<ApiError> handleProductNotFoundException(ProductNotFoundException e, WebRequest request){
+//        ApiError error = new ApiError(HttpStatus.NOT_FOUND,e.getMessage(),e);
+//        return ResponseEntity.badRequest().body(error);
+//    }
+//    @ExceptionHandler
+//    public ResponseEntity<ApiError> handleMarkNotInformedException(MarkNotInformedException e, WebRequest request){
+//        ApiError error = new ApiError(HttpStatus.NOT_FOUND,e.getMessage(),e);
+//        return ResponseEntity.badRequest().body(error);
+//    }
+    @ExceptionHandler({MarkNotInformedException.class, ProductNotFoundException.class})//TODO: FAZER PARA CASOS IGUAIS
+    public ResponseEntity<ApiError> handleNotInformedException(Exception e, WebRequest request){
         ApiError error = new ApiError(HttpStatus.NOT_FOUND,e.getMessage(),e);
         return ResponseEntity.badRequest().body(error);
     }
+
     @ExceptionHandler
-    public ResponseEntity<ApiError> handleMarkNotInformedException(MarkNotInformedException e, WebRequest request){
-        ApiError error = new ApiError(HttpStatus.NOT_FOUND,e.getMessage(),e);
-        return ResponseEntity.badRequest().body(error);
-    }
-    @ExceptionHandler
-    public ResponseEntity<ApiError> handleAmountNotValideException(AmountNotValideException e, WebRequest request){
+    public ResponseEntity<ApiError> handleAmountNotValidException(AmountNotValidException e, WebRequest request){
         ApiError error = new ApiError(HttpStatus.BAD_REQUEST,e.getMessage(),e);
         return ResponseEntity.badRequest().body(error);
     }
