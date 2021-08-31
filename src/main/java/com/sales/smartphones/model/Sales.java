@@ -19,11 +19,11 @@ public class Sales {
     @Column(name = "status_sales")
     private String status;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name ="id_customer")
     private Customer customer;
 
-    @OneToMany
+    @ManyToMany
     @JoinColumn(name ="id_product")
     private List<Product> products;
 }

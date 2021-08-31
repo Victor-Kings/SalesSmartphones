@@ -5,7 +5,9 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Data
-@Entity(name="product")
+@Entity
+@Table(name="product")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,8 +17,4 @@ public class Product {
     private String model;
     private String color;
     private Float price;
-
-    @ManyToOne
-    @JoinColumn(name ="id_sales")
-    private Sales sale;
 }
