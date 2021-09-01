@@ -21,9 +21,9 @@ public class Sales {
 
     @ManyToOne
     @JoinColumn(name ="id_customer")
-    private Customer customer;
+    private Customer customerId;
 
     @ManyToMany
     @JoinColumn(name ="id_product")
-    private List<Product> products;
+    private List<Product> productsId;
 }
