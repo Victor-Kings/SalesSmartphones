@@ -1,5 +1,6 @@
 package com.sales.smartphones.model;
 
+import com.sales.smartphones.model.enums.Status;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -12,12 +13,14 @@ public class Sales {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Date buyDate;
+
     private Date deliveryDate;
 
-  //  @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     @Column(name = "status_sales")
-    private String status;
+    private Status status;
 
     @ManyToOne
     @JoinColumn(name ="id_customer")

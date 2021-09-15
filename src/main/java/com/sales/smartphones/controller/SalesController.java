@@ -1,4 +1,5 @@
 package com.sales.smartphones.controller;
+import com.sales.smartphones.DTO.SalesDTO;
 import com.sales.smartphones.model.Sales;
 import com.sales.smartphones.service.SalesService;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,7 @@ public class SalesController {
     private final SalesService salesService;
 
     @PostMapping()
-    public ResponseEntity<Sales> create(@RequestBody Sales sales) {
+    public ResponseEntity<Sales> create(@RequestBody SalesDTO sales) {
         Sales salesRet = salesService.create(sales);
         return ResponseEntity.ok(salesRet);
     }
