@@ -4,7 +4,7 @@ import com.sales.smartphones.model.enums.Status;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -14,9 +14,9 @@ public class Sales {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Date buyDate;
+    private LocalDateTime buyDate;
 
-    private Date deliveryDate;
+    private LocalDateTime deliveryDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status_sales")

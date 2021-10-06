@@ -18,7 +18,7 @@ public class GlobalException extends ResponseEntityExceptionHandler{
 //        ApiError error = new ApiError(HttpStatus.NOT_FOUND,e.getMessage(),e);
 //        return ResponseEntity.badRequest().body(error);
 //    }
-    @ExceptionHandler({MarkNotInformedException.class, ProductNotFoundException.class})//TODO: FAZER PARA CASOS IGUAIS
+    @ExceptionHandler({MarkNotInformedException.class, ProductNotFoundException.class, CustomerNotFoundException.class})
     public ResponseEntity<ApiError> handleNotInformedException(Exception e, WebRequest request){
         ApiError error = new ApiError(HttpStatus.NOT_FOUND,e.getMessage(),e);
         return ResponseEntity.badRequest().body(error);

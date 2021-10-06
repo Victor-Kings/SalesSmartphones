@@ -1,6 +1,7 @@
 package com.sales.smartphones.service;
 
 import com.sales.smartphones.DTO.SalesDTO;
+import com.sales.smartphones.exception.CustomerNotFoundException;
 import com.sales.smartphones.exception.ProductNotFoundException;
 import com.sales.smartphones.model.Customer;
 import com.sales.smartphones.model.Product;
@@ -12,8 +13,8 @@ import com.sales.smartphones.repository.SalesRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,27 +31,30 @@ public class SalesServiceImpl implements SalesService{
         if(customer.isPresent()) {
             sales.setCustomerId(customer.get());
         }else{
-            throw new ProductNotFoundException("id do Customer não encontrado");//TODO: arrumar as exceptions
+            throw new CustomerNotFoundException("id do Customer não encontrado");
         }
 
-        Optional<Product> product;
+        List<Product> products = createListProducts(salesDTO);
 
+        sales.setProductsId(products);
+
+        sales.setBuyDate(LocalDateTime.now());
+
+        sales.setStatus(Status.AGUARDANDO_PAGAMENTO);
+
+        return salesRepository.save(sales);
+    }
+    private  List<Product> createListProducts(SalesDTO salesDTO){
         List<Product> products = new ArrayList<Product>();
+        Optional<Product> product;
         for(Long productId : salesDTO.getProductsId()) {
             product = productRepository.findById(productId);
             if(product.isPresent()){
                 products.add(product.get());
             }else{
-                throw new ProductNotFoundException("Produto com id: "+product.get().getId()+" não encontrado");//TODO: arrumar exception
+                throw new ProductNotFoundException("Produto com id: "+productId+" não encontrado");
             }
         }
-        sales.setProductsId(products);
-
-        Date date = new Date();
-        sales.setBuyDate(date);
-
-        sales.setStatus(Status.AGUARDANDO_PAGAMENTO);//TODO: implementar enum corretamente Status.AGUARDANDO_PAGAMENTO
-
-        return salesRepository.save(sales);
+        return products;
     }
 }
